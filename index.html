@@ -1,50 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <base target="_top">
-  </head>
-  <body>
-    <h2>Verifikasi Password</h2>
-    <form onsubmit="submitForm(); return false;">
-      <input type="password" id="passwordInput">
-      <br>
-      <button type="submit">Submit</button>
-    </form>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-storage.js"></script>
+<head>
+    <title>My Protected Drive Link</title>
+</head>
 
+<body>
     <script>
-      function submitForm() {
-        var password = document.getElementById('passwordInput').value;
-        google.script.run.verifyPassword(password);
-      }
+        var password = "mypassword"; // Ganti dengan password yang diinginkan
+
+        function checkPassword() {
+            var storedPassword = sessionStorage.getItem("password");
+            if (storedPassword === password) {
+                redirectToDrive();
+            } else {
+                showPasswordForm();
+            }
+        }
+
+        function submitPassword() {
+            var passwordInput = document.getElementById("passwordInput");
+            var passwordValue = passwordInput.value;
+
+            if (passwordValue === password) {
+                sessionStorage.setItem("password", password);
+                redirectToDrive();
+            } else {
+                var errorElement = document.getElementById("error");
+                errorElement.textContent = "Password salah. Silakan coba lagi.";
+            }
+        }
+
+        function showPasswordForm() {
+            var formHtml = `
+                <h2>Masukkan Password</h2>
+                <input type="password" id="passwordInput" />
+                <button onclick="submitPassword()">Submit</button>
+                <p id="error" style="color: red;"></p>
+            `;
+            document.body.innerHTML = formHtml;
+        }
+
+        function redirectToDrive() {
+            window.location.href = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAw"; // Ganti ID_FOLDER dengan ID folder Google Drive yang ingin Anda bagikan
+        }
+
+        checkPassword();
     </script>
+</body>
 
-    <script src="script.js"></script>
-
-    <script>
-      function showSuccessPage() {
-        var successHtml = `
-          <h2>Verifikasi Berhasil</h2>
-          <p>Password yang Anda masukkan benar.</p>
-          <button onclick="google.script.host.close()">Tutup</button>
-        `;
-        document.body.innerHTML = successHtml;
-      }
-
-      function showFailurePage() {
-        var failureHtml = `
-          <h2>Verifikasi Gagal</h2>
-          <p>Password yang Anda masukkan salah.</p>
-          <button onclick="google.script.host.close()">Tutup</button>
-        `;
-        document.body.innerHTML = failureHtml;
-      }
-    </script>
-  </body>
 </html>
