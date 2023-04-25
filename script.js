@@ -1,39 +1,37 @@
-function doGet(e) {
-  var template = HtmlService.createTemplateFromFile('index');
-  var htmlOutput = template.evaluate()
-    .setTitle('Verifikasi Password')
-    .setWidth(300)
-    .setHeight(150);
-  return htmlOutput;
+var password = "mypassword"; // Ganti dengan password yang diinginkan
+
+function checkPassword() {
+  var storedPassword = sessionStorage.getItem("password");
+  if (storedPassword === password) {
+    redirectToDrive();
+  } else {
+    showPasswordForm();
+  }
 }
 
-function verifyPassword(password) {
-  // Ganti password yang diharapkan di sini
-  var expectedPassword = 'password123';
-
-  if (password === expectedPassword) {
-    var template = HtmlService.createTemplateFromFile('success');
-    var htmlOutput = template.evaluate()
-      .setTitle('Verifikasi Berhasil')
-      .setWidth(300)
-      .setHeight(150);
-
-    var output = HtmlService.createHtmlOutput();
-    output.setSandboxMode(HtmlService.SandboxMode.IFRAME)
-      .append(htmlOutput.getContent())
-      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
-
-    // Tambahkan cookie untuk menandai bahwa password sudah diverifikasi
-    output.addCookie(Session.getActiveUser().getEmail(), 'true', 3600);
-
-    return output;
+function submitPassword() {
+  var passwordInput = document.getElementById("passwordInput");
+  var passwordValue = passwordInput.value;
+  
+  if (passwordValue === password) {
+    sessionStorage.setItem("password", password);
+    redirectToDrive();
   } else {
-    var template = HtmlService.createTemplateFromFile('failure');
-    var htmlOutput = template.evaluate()
-      .setTitle('Verifikasi Gagal')
-      .setWidth(300)
-      .setHeight(150);
-
-    return htmlOutput;
+    var errorElement = document.getElementById("error");
+    errorElement.textContent = "Password salah. Silakan coba lagi.";
   }
+}
+
+function showPasswordForm() {
+  var formHtml = `
+    <h2>Masukkan Password</h2>
+    <input type="password" id="passwordInput" />
+    <button onclick="submitPassword()">Submit</button>
+    <p id="error" style="color: red;"></p>
+  `;
+  document.body.innerHTML = formHtml;
+}
+
+function redirectToDrive() {
+  window.location.href = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAwR"; // Ganti ID_FOLDER dengan ID folder Google Drive yang ingin Anda bagikan
 }
