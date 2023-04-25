@@ -73,16 +73,14 @@
 
     <script>
         var password = "12345"; // Ganti dengan password yang diinginkan
-        var driveLink = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAw"; // Ganti dengan link Google Drive yang ingin Anda bagikan
+        var driveLink = "iframe.html"; // Ganti dengan nama file halaman iframe
 
         function submitPassword() {
             var passwordInput = document.getElementById("passwordInput");
             var passwordValue = passwordInput.value;
 
             if (passwordValue === password) {
-                // Simpan session user di localStorage
-                localStorage.setItem("user", "aktif");
-                // Redirect ke link Google Drive
+                // Redirect ke halaman iframe setelah password benar
                 window.location.href = driveLink;
             } else {
                 var errorElement = document.getElementById("error");
