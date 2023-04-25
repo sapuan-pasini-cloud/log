@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <h2>Verifikasi Password</h2>
+    <form onsubmit="submitForm(); return false;">
+      <input type="password" id="passwordInput">
+      <br>
+      <button type="submit">Submit</button>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.0/firebase-storage.js"></script>
+
+    <script>
+      function submitForm() {
+        var password = document.getElementById('passwordInput').value;
+        google.script.run.verifyPassword(password);
+      }
+    </script>
+
+    <script src="script.js"></script>
+
+    <script>
+      function showSuccessPage() {
+        var successHtml = `
+          <h2>Verifikasi Berhasil</h2>
+          <p>Password yang Anda masukkan benar.</p>
+          <button onclick="google.script.host.close()">Tutup</button>
+        `;
+        document.body.innerHTML = successHtml;
+      }
+
+      function showFailurePage() {
+        var failureHtml = `
+          <h2>Verifikasi Gagal</h2>
+          <p>Password yang Anda masukkan salah.</p>
+          <button onclick="google.script.host.close()">Tutup</button>
+        `;
+        document.body.innerHTML = failureHtml;
+      }
+    </script>
+  </body>
+</html>
