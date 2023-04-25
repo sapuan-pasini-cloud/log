@@ -80,8 +80,8 @@
             var passwordValue = passwordInput.value;
 
             if (passwordValue === password) {
-                // Simpan session user
-                sessionStorage.setItem("user", "aktif");
+                // Simpan session user di localStorage
+                localStorage.setItem("user", "aktif");
                 // Redirect ke link Google Drive
                 window.location.href = driveLink;
             } else {
