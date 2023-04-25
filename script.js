@@ -33,5 +33,5 @@ function showPasswordForm() {
 }
 
 function redirectToDrive() {
-  window.location.href = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAwR"; // Ganti ID_FOLDER dengan ID folder Google Drive yang ingin Anda bagikan
+  window.location.href = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAw"; // Ganti ID_FOLDER dengan ID folder Google Drive yang ingin Anda bagikan
 }
