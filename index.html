@@ -2,50 +2,90 @@
 <html>
 
 <head>
-    <title>My Protected Drive Link</title>
+    <title>Masukkan Password</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #000, #333);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+            background-color: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .password-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .password-input {
+            padding: 8px;
+            margin-top: 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .submit-button {
+            margin-top: 16px;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            margin-top: 16px;
+            text-align: center;
+            color: #ff6767;
+        }
+    </style>
 </head>
 
 <body>
-    <script>
-        var password = "mypassword"; // Ganti dengan password yang diinginkan
+    <div class="container">
+        <h1>Masukkan Password</h1>
+        <form class="password-form">
+            <input type="password" id="passwordInput" class="password-input" placeholder="Password" />
+            <button type="button" class="submit-button" onclick="submitPassword()">Submit</button>
+            <p class="error-message" id="error"></p>
+        </form>
+    </div>
 
-        function checkPassword() {
-            var storedPassword = sessionStorage.getItem("password");
-            if (storedPassword === password) {
-                redirectToDrive();
-            } else {
-                showPasswordForm();
-            }
-        }
+    <script>
+        var password = "12345"; // Ganti dengan password yang diinginkan
+        var driveLink = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAw"; // Ganti dengan link Google Drive yang ingin Anda bagikan
 
         function submitPassword() {
             var passwordInput = document.getElementById("passwordInput");
             var passwordValue = passwordInput.value;
 
             if (passwordValue === password) {
-                sessionStorage.setItem("password", password);
-                redirectToDrive();
+                window.location.href = driveLink;
             } else {
                 var errorElement = document.getElementById("error");
                 errorElement.textContent = "Password salah. Silakan coba lagi.";
             }
         }
-
-        function showPasswordForm() {
-            var formHtml = `
-                <h2>Masukkan Password</h2>
-                <input type="password" id="passwordInput" />
-                <button onclick="submitPassword()">Submit</button>
-                <p id="error" style="color: red;"></p>
-            `;
-            document.body.innerHTML = formHtml;
-        }
-
-        function redirectToDrive() {
-            window.location.href = "https://drive.google.com/drive/folders/13otB1Q2RrslkdD9uumvP_-hnk71BTJAw"; // Ganti ID_FOLDER dengan ID folder Google Drive yang ingin Anda bagikan
-        }
-
-        checkPassword();
     </script>
 </body>
 
